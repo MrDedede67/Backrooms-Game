@@ -24,8 +24,12 @@ public class ItemPickUp : MonoBehaviour
 
                 if (itemComponent != null)
                 {
-                    InventoryManager.Instance.AddToInventory(itemComponent.data);
-                    Destroy(hit.transform.gameObject);
+                    bool wasAdded = InventoryManager.Instance.AddToInventory(itemComponent.data);
+
+                    if (wasAdded)
+                    {
+                        Destroy(hit.transform.gameObject);
+                    }
                 }
             }
         }

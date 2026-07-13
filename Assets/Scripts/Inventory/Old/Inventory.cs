@@ -20,10 +20,12 @@ public class Inventory : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.R))
         {
             ToggleInventoryUI();
         }
+        */
     }
 
     private void ToggleInventoryUI()

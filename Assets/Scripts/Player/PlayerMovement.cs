@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask ground;
 
     [SerializeField] public Camera playerCamera;
+
+    public bool isPaused = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isPaused)
+        {
+
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+            return;
+        }
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
        
