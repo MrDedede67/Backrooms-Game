@@ -47,4 +47,33 @@ public class InventoryManager : MonoBehaviour
             itemLookup[itemName][index].SetActive(true);
         }
     }
+
+    public void DropItem(ItemData item, Vector3 spawnPosition)
+    {
+        ItemData itemToRemove = inventory.FirstOrDefault(i => i.itemName == item.itemName);
+
+        if (itemToRemove != null)
+        {
+            inventory.Remove(itemToRemove);
+
+            RefreshUI(item.itemName);
+
+            Instantiate(item.prefab, spawnPosition, Quaternion.identity);
+        }
+    }
+
+    private void RefreshUI(string itemName)
+    {
+        if (itemLookup.ContainsKey(itemName))
+        {
+            GameObject[] uiSlots = itemLookup[itemName];
+            int currentCount = inventory.Count(i => i.itemName == itemName);
+
+            for (int i = 0; i < uiSlots.Length; i++)
+            {
+
+                uiSlots[i].SetActive(i < currentCount);
+            }
+        }
+    }
 }

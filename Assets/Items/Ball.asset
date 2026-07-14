@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Ball
   icon: {fileID: 0}
   prefab: {fileID: 491790565375633352, guid: bd7dd80c11877b04ba7dda48c74b490a, type: 3}
+  isEquippable: 0
