@@ -11,6 +11,9 @@ public class ItemPickUp : MonoBehaviour
     [SerializeField] private Color defaultColor = Color.white;
     [SerializeField] private Color highlightColor = Color.red;
 
+    [Header("UI References")]
+    [SerializeField] private GameObject Inventory;
+
     void Update()
     {
         crosshair.color = defaultColor;
@@ -18,7 +21,7 @@ public class ItemPickUp : MonoBehaviour
         {
             crosshair.color = highlightColor;
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && Inventory != null)
             {
                 Items itemComponent = hit.transform.GetComponent<Items>();
 

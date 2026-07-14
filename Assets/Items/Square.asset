@@ -16,3 +16,5 @@ MonoBehaviour:
   itemName: Square
   icon: {fileID: 0}
   prefab: {fileID: 3522898674668939248, guid: 4d131fb74f167d849a506741dc58ffe2, type: 3}
+  isEquippable: 1
+  isConsumeable: 0

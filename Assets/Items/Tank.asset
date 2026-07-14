@@ -16,4 +16,5 @@ MonoBehaviour:
   itemName: Tank
   icon: {fileID: 0}
   prefab: {fileID: 9109780878203810920, guid: 51a371a7c5682a047998c9625456faf0, type: 3}
-  isEquippable: 0
+  isEquippable: 1
+  isConsumeable: 0

@@ -16,6 +16,11 @@ public class InventoryManager : MonoBehaviour
 
     [SerializeField] private List<ItemUIList> itemDisplaySettings;
 
+    [SerializeField] private List<ItemUIList> equippables;
+
+    bool equipped = false;
+    public ItemData currentlyEquippedItem;
+
     private Dictionary<string, GameObject[]> itemLookup = new Dictionary<string, GameObject[]>();
 
     void Awake()
@@ -50,15 +55,63 @@ public class InventoryManager : MonoBehaviour
 
     public void DropItem(ItemData item, Vector3 spawnPosition)
     {
+        Instantiate(item.prefab, spawnPosition, Quaternion.identity);
+    }
+
+    public void EquipItem(ItemData item)
+    {
+        if (equipped) return;
+
+        currentlyEquippedItem = item;
+
+        var equipSetting = equippables.FirstOrDefault(e => e.itemName == item.itemName);
+
+        if (equipSetting != null)
+        {
+            foreach (GameObject obj in equipSetting.uiObjects)
+            {
+                if (obj != null) obj.SetActive(true);
+            }
+        }
+
+        RemoveItemFromInventory(item);
+        equipped = true;
+        Debug.Log(item.itemName + " equipped.");
+    }
+
+    public void DropEquippedItem(Vector3 spawnPosition)
+    {
+        if (currentlyEquippedItem != null)
+        {
+            var equipSetting = equippables.FirstOrDefault(e => e.itemName == currentlyEquippedItem.itemName);
+
+            if (equipSetting != null)
+            {
+                foreach (GameObject obj in equipSetting.uiObjects)
+                {
+                    if (obj != null) obj.SetActive(false);
+                }
+            }
+
+            if (currentlyEquippedItem.prefab != null)
+            {
+                Instantiate(currentlyEquippedItem.prefab, spawnPosition, Quaternion.identity);
+            }
+
+            currentlyEquippedItem = null;
+            equipped = false;
+            Debug.Log("Dropped equipped item.");
+        }
+    }
+
+    public void RemoveItemFromInventory(ItemData item)
+    {
         ItemData itemToRemove = inventory.FirstOrDefault(i => i.itemName == item.itemName);
 
         if (itemToRemove != null)
         {
             inventory.Remove(itemToRemove);
-
             RefreshUI(item.itemName);
-
-            Instantiate(item.prefab, spawnPosition, Quaternion.identity);
         }
     }
 
