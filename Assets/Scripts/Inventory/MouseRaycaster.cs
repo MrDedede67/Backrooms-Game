@@ -15,7 +15,6 @@ public class MouseRaycaster : MonoBehaviour
         RaycastHit hit;
         bool hitItem = Physics.Raycast(ray, out hit, interactionDistance, itemLayer);
 
-        // 1. Handle Hovering Logic
         if (hitItem)
         {
             Items itemWorld = hit.collider.GetComponent<Items>();
@@ -29,10 +28,8 @@ public class MouseRaycaster : MonoBehaviour
             currentHoveredItem = null;
         }
 
-        // 2. Handle Inputs
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            // PRIORITY 1: Drop from Hovered Item
             if (currentHoveredItem != null)
             {
                 if (InventoryManager.Instance.inventory.Contains(currentHoveredItem.data))
@@ -43,7 +40,6 @@ public class MouseRaycaster : MonoBehaviour
                     currentHoveredItem = null;
                 }
             }
-            // PRIORITY 2: Drop from Equipped (Only if NOT hovering over an item)
             else if (InventoryManager.Instance.currentlyEquippedItem != null)
             {
                 Vector3 spawnPos = transform.position + transform.forward * 1.5f;
@@ -51,13 +47,11 @@ public class MouseRaycaster : MonoBehaviour
             }
         }
 
-        // Equip logic
         if (Input.GetKeyDown(KeyCode.E) && currentHoveredItem != null)
         {
             if (currentHoveredItem.data.isEquippable)
             {
                 InventoryManager.Instance.EquipItem(currentHoveredItem.data);
-                // Optionally destroy the object in the world after equipping
                 currentHoveredItem = null;
             }
         }
